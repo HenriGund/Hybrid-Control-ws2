@@ -22,8 +22,9 @@ D = np.zeros((2, 1))
 dt = 0.005 # precision
 tf = 3.25 # time span
 t = np.arange(0,tf,dt) # sampling points
-Q = np.eye(2)
-R = np.array([1.0]) # input cost matrix
+# Q = np.eye(2)
+Q = np.diag([800.0, 1.0]) # state cost matrix
+R = np.array([10]) # input cost matrix
 x0 = [[-.52], [0]] # initial state [rad, rad/s]
 
 # build open-loop model of the inverted pendulum

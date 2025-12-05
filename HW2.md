@@ -33,3 +33,15 @@ The expected output is four subplots that show how the tank temperatures evolve 
 Together, these plots match the expected behaviour for the heated-tanks system under the given control strategies. The open-loop results confirm that the system is inherently slow and coupled, making precise temperature regulation difficult without feedback. The proportional controller improves tracking but introduces oscillatory behaviour due to its limited ability to manage the interdependence between the tanks. In contrast, the LQR controller delivers the expected superior performance: smooth, fast, and stable convergence to the reference temperatures. This demonstrates how multivariable optimal control more effectively handles the coupling and dynamics of the two-tank system.
 
 ![alt text](image-2.png)
+
+---
+
+# Question 3
+
+The first result for this question is shown in the figure below:
+
+![alt text](image-3.png)
+
+The code first constructs a linearized state-space model of the inverted pendulum around its upright equilibrium using the matrices \(A\) and \(B\) provided in the problem. The two states are the angular position \(\phi\) and angular velocity \(\dot{\phi}\). An LQ cost is defined with \(Q = I_2\), penalizing both states equally, and \(R = 1\), which penalizes the control effort. The `lqr(A, B, Q, R)` function computes the optimal feedback gain \(K\), and the closed-loop system is formed as \(A_{\text{cl}} = A - BK\). The simulation then integrates this closed-loop system starting from the initial state \(x_0 = [-0.52,\ 0]^T\) with zero external input. Both states are used as outputs so that the evolution of angle and angular velocity can be plotted.
+
+In the generated plot, the angle \(\phi\) (green curve) begins at \(-0.52\) rad and smoothly converges toward zero, showing that the LQR controller successfully stabilizes the pendulum in the upright configuration. The angular velocity \(\dot{\phi}\) (blue curve) displays an initial peak—corresponding to the corrective action of the controller—and then decays exponentially back to zero. Overall, the response is stable, well-damped, and free of persistent oscillations, with only a small overshoot in velocity and a settling time of a few seconds. This behavior aligns with what is expected from an LQR-controlled linear system with moderate weighting on both state deviation and control effort.
